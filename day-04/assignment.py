@@ -6,3 +6,8 @@ class Assignment:
 
     def fully_contains(self, alternative_assignment_range) -> bool:
         return set(self.section_range).issuperset(set(alternative_assignment_range))
+
+    def overlaps_at_all(self, alternative_assignment_range) -> bool:
+        if set(self.section_range) & set(alternative_assignment_range):
+            return True
+        return False
