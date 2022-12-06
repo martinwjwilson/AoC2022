@@ -1,20 +1,16 @@
-from crate import Crate
-
-
 class Ship:
     def __init__(self, crates):
         self.crates = crates
 
-    def move(self, number_of_crates_to_move: int, from_stack: int, to_stack: int):
+    def move_individually(self, number_of_crates_to_move: int, from_stack: int, to_stack: int):
         for _ in range(number_of_crates_to_move):
             crate = self.crates[from_stack-1].pop()
             self.crates[to_stack-1].append(crate)
 
-    def move_9001(self, number_of_crates_to_move: int, from_stack: int, to_stack: int):
+    def move_groups(self, number_of_crates_to_move: int, from_stack: int, to_stack: int):
         from_stack_index = from_stack - 1
         to_stack_index = to_stack - 1
         crates_to_add = self.crates[from_stack_index][-number_of_crates_to_move:]
-        print(crates_to_add)
         for crate in crates_to_add:
             self.crates[to_stack_index].append(crate)
         for _ in range(number_of_crates_to_move):

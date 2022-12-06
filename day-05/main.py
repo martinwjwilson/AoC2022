@@ -2,6 +2,8 @@ from move import Move
 from crate import Crate
 from ship import Ship
 
+from copy import deepcopy
+
 # Split up containers and moves
 f = open("input.txt")
 content = f.read().split("\n")
@@ -41,9 +43,6 @@ for stack in crates:
     temp_crates.append(stack)
 crates = temp_crates
 
-# create a ship
-ship = Ship(crates)
-
 # create a list of moves
 moves = []
 for move_string in list_of_move_input:
@@ -52,12 +51,34 @@ for move_string in list_of_move_input:
                       int(split_movement_string[3]),
                       int(split_movement_string[5])))
 
-# move all the containers
-for movement in moves:
-    ship.move_groups(movement.number_of_movements,
-                   movement.from_stack,
-                   movement.to_stack)
 
-# get the answer
-answer = ship.get_top_crate_letters()
-print(answer)
+def move_containers(ship, movement_type: str, moves_to_execute: [Move]):
+    for movement in moves_to_execute:
+        if movement_type == "individual":
+            ship.move_individually(movement.number_of_movements,
+                                   movement.from_stack,
+                                   movement.to_stack)
+        else:
+            ship.move_groups(movement.number_of_movements,
+                             movement.from_stack,
+                             movement.to_stack)
+
+
+if __name__ == '__main__':
+    # create the ships
+    first_ship = Ship(deepcopy(crates))
+    second_ship = Ship(deepcopy(crates))
+
+    # show the answers
+    # move all the containers for ship 1
+    print(second_ship.crates[0])
+    move_containers(first_ship, "individual", moves)
+    print(first_ship.crates[0])
+    print(second_ship.crates[0])
+    answer_1 = first_ship.get_top_crate_letters()
+    # move all the containers for ship 2
+    move_containers(second_ship, "multiple", moves)
+    answer_2 = second_ship.get_top_crate_letters()
+
+    print(f"The answer for part 1: {answer_1}")
+    print(f"The answer for part 2: {answer_2}")
