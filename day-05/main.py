@@ -71,10 +71,7 @@ if __name__ == '__main__':
 
     # show the answers
     # move all the containers for ship 1
-    print(second_ship.crates[0])
     move_containers(first_ship, "individual", moves)
-    print(first_ship.crates[0])
-    print(second_ship.crates[0])
     answer_1 = first_ship.get_top_crate_letters()
     # move all the containers for ship 2
     move_containers(second_ship, "multiple", moves)
